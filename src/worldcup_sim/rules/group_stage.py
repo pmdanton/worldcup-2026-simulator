@@ -8,7 +8,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.worldcup_sim.data.models import GroupStanding, MatchResult
+    from worldcup_sim.data.models import GroupStanding, MatchResult
 
 
 def compute_group_standings(matches: list[MatchResult], group: str) -> list[GroupStanding]:
@@ -25,7 +25,7 @@ def compute_group_standings(matches: list[MatchResult], group: str) -> list[Grou
         A list of GroupStanding objects for each team that appeared in at least
         one match belonging to *group*.
     """
-    from src.worldcup_sim.data.models import GroupStanding
+    from worldcup_sim.data.models import GroupStanding
 
     # Collect team names from played matches in this group
     teams: set[str] = set()

@@ -8,11 +8,11 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.worldcup_sim.app.state import get, set
-from src.worldcup_sim.data.fetch import fetch_all_data
-from src.worldcup_sim.data.models import GroupStanding, Team
-from src.worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
-from src.worldcup_sim.rules.third_place import rank_third_placed_teams
+from worldcup_sim.app.state import get, set
+from worldcup_sim.data.fetch import fetch_all_data
+from worldcup_sim.data.models import GroupStanding, Team
+from worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
+from worldcup_sim.rules.third_place import rank_third_placed_teams
 
 _TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent.parent / "data" / "teams.json"
 

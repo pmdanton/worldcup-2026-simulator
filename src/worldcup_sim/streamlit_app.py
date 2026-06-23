@@ -14,8 +14,8 @@ st.set_page_config(
     layout="wide",
 )
 
-from src.worldcup_sim.app.state import get, init_state, set
-from src.worldcup_sim.app.pages import bracket, odds, simulation, standings
+from worldcup_sim.app.state import get, init_state, set
+from worldcup_sim.app.pages import bracket, odds, simulation, standings
 
 
 def _apply_styling():

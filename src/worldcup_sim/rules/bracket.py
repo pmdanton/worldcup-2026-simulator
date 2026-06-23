@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 # Use src-relative import to work with project layout
-from src.worldcup_sim.data.models import KnockoutMatch
+from worldcup_sim.data.models import KnockoutMatch
 
 # ──────────────────────────────────────────────
 #  Load Annex C lookup table (495 combinations)

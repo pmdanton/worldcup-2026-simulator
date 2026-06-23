@@ -6,6 +6,11 @@ dist/
 build/
 .venv/
 venv/
+.opencode.json
+.python-version
+uv.lock
+main.py
+france_*
 
 # Data files (from external sources, not committed)
 data/*.csv

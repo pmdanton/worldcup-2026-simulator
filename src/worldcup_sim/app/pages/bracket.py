@@ -8,13 +8,13 @@ from pathlib import Path
 import streamlit as st
 import streamlit.components.v1 as components
 
-from src.worldcup_sim.app.components.bracket_viz import render_bracket
-from src.worldcup_sim.app.state import get, set
-from src.worldcup_sim.data.fetch import fetch_all_data
-from src.worldcup_sim.data.models import GroupStanding, KnockoutMatch
-from src.worldcup_sim.rules.bracket import build_full_bracket, build_round_of_32, resolve_bracket_winners
-from src.worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
-from src.worldcup_sim.rules.third_place import rank_third_placed_teams
+from worldcup_sim.app.components.bracket_viz import render_bracket
+from worldcup_sim.app.state import get, set
+from worldcup_sim.data.fetch import fetch_all_data
+from worldcup_sim.data.models import GroupStanding, KnockoutMatch
+from worldcup_sim.rules.bracket import build_full_bracket, build_round_of_32, resolve_bracket_winners
+from worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
+from worldcup_sim.rules.third_place import rank_third_placed_teams
 
 _TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent.parent / "data" / "teams.json"
 

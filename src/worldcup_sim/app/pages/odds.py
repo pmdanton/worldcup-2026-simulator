@@ -5,15 +5,15 @@ from __future__ import annotations
 import streamlit as st
 import pandas as pd
 
-from src.worldcup_sim.app.components.charts import odds_comparison_chart
-from src.worldcup_sim.app.state import get, set
-from src.worldcup_sim.data.fetch import (
+from worldcup_sim.app.components.charts import odds_comparison_chart
+from worldcup_sim.app.state import get, set
+from worldcup_sim.data.fetch import (
     fetch_all_data,
     fetch_all_match_odds,
     fetch_elo_ratings,
     fetch_polymarket_tournament_odds,
 )
-from src.worldcup_sim.sim.engine import run_simulation
+from worldcup_sim.sim.engine import run_simulation
 
 
 def main():

@@ -14,11 +14,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.worldcup_sim.data.models import KnockoutMatch, MatchResult
-from src.worldcup_sim.rules.bracket import build_full_bracket, build_round_of_32
-from src.worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
-from src.worldcup_sim.rules.third_place import rank_third_placed_teams
-from src.worldcup_sim.sim.outcome_table import (
+from worldcup_sim.data.models import KnockoutMatch, MatchResult
+from worldcup_sim.rules.bracket import build_full_bracket, build_round_of_32
+from worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
+from worldcup_sim.rules.third_place import rank_third_placed_teams
+from worldcup_sim.sim.outcome_table import (
     DRAW,
     WIN_T1,
     WIN_T2,
@@ -26,7 +26,7 @@ from src.worldcup_sim.sim.outcome_table import (
     get_outcome,
     sample_goals,
 )
-from src.worldcup_sim.sim.predictor import get_match_probabilities, sample_match_outcome
+from worldcup_sim.sim.predictor import get_match_probabilities, sample_match_outcome
 
 _TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent / "data" / "teams.json"
 

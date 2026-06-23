@@ -8,22 +8,22 @@ import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
 
-from src.worldcup_sim.app.components.charts import (
+from worldcup_sim.app.components.charts import (
     stage_distribution_chart,
     team_path_chart,
     win_probability_chart,
 )
-from src.worldcup_sim.app.state import get, set
-from src.worldcup_sim.data.fetch import (
+from worldcup_sim.app.state import get, set
+from worldcup_sim.data.fetch import (
     fetch_all_data,
     fetch_all_match_odds,
     fetch_elo_ratings,
     get_or_fetch_odds,
     is_match_from_polymarket,
 )
-from src.worldcup_sim.data.models import MatchOddsInfo
-from src.worldcup_sim.sim.engine import run_simulation
-from src.worldcup_sim.sim.predictor import get_match_probabilities
+from worldcup_sim.data.models import MatchOddsInfo
+from worldcup_sim.sim.engine import run_simulation
+from worldcup_sim.sim.predictor import get_match_probabilities
 
 
 def main():
@@ -238,7 +238,7 @@ def main():
             elo2 = elo.get(t2, 1500)
 
             # Check odds source (use cached data, avoid API calls from UI)
-            from src.worldcup_sim.data.fetch import get_cached_match_odds
+            from worldcup_sim.data.fetch import get_cached_match_odds
             odds = get_cached_match_odds(t1, t2)
             if odds is None:
                 # Per-match Polymarket odds typically don't exist for WC2026

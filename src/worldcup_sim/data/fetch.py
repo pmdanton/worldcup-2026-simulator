@@ -7,7 +7,7 @@ from pathlib import Path
 
 import httpx
 
-from src.worldcup_sim.data.models import MatchResult
+from worldcup_sim.data.models import MatchResult
 
 
 _ROUND_NORMALIZE: dict[str, str] = {

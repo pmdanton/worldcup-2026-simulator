@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 
-from src.worldcup_sim.sim.engine import SimulationRun
+from worldcup_sim.sim.engine import SimulationRun
 
 
 def compute_bracket_probabilities(

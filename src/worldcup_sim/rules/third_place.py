@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.worldcup_sim.data.models import GroupStanding, MatchResult, ThirdPlaceRanking
+    from worldcup_sim.data.models import GroupStanding, MatchResult, ThirdPlaceRanking
 
 
 def rank_third_placed_teams(
@@ -40,7 +40,7 @@ def rank_third_placed_teams(
     """
     import random
 
-    from src.worldcup_sim.data.models import ThirdPlaceRanking
+    from worldcup_sim.data.models import ThirdPlaceRanking
 
     _FIFA_RANK: dict[str, int] = {
         "Argentina": 1, "France": 2, "Spain": 3, "England": 4,
