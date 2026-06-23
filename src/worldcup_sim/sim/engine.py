@@ -29,8 +29,8 @@ from worldcup_sim.sim.predictor import get_match_probabilities, sample_match_out
 
 
 def _load_teams() -> dict[str, list[str]]:
-    from importlib.resources import files
-    return json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())["groups"]
+    from worldcup_sim.data._teams import GROUPS
+    return GROUPS
 
 
 def _round_name(match_id: int) -> str:

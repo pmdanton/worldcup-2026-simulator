@@ -8,8 +8,6 @@ routing logic.
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 
 # Match outcome encoding (int8):
@@ -23,12 +21,10 @@ WIN_T2: int = 2
 
 def get_team_order() -> list[str]:
     """Return all 48 team names in a stable order (group A–L)."""
-    from importlib.resources import files
-    data = json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())
-    groups = data["groups"]
+    from worldcup_sim.data._teams import GROUPS
     teams: list[str] = []
-    for grp in sorted(groups.keys()):
-        teams.extend(groups[grp])
+    for grp in sorted(GROUPS.keys()):
+        teams.extend(GROUPS[grp])
     return teams
 
 

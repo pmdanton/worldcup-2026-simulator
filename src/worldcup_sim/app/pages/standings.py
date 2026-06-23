@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import json
-
 import pandas as pd
 import streamlit as st
 
@@ -21,8 +19,8 @@ def _fetch_data():
 
 @st.cache_data(ttl=3600)
 def _load_teams() -> dict[str, list[str]]:
-    from importlib.resources import files
-    return json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())["groups"]
+    from worldcup_sim.data._teams import GROUPS
+    return GROUPS
 
 
 def _color_standings(val: pd.DataFrame) -> pd.DataFrame:

@@ -1,4 +1,7 @@
-{
+# Annex C: 495 third-place pairing combinations
+# Auto-generated from data/annex_c.json — do not edit directly
+
+ANNEX_C_RAW: dict[str, dict] = {
   "1": {
     "groups": [
       "E",
