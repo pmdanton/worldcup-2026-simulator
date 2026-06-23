@@ -5,7 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from worldcup_sim.app.state import get, set
+from worldcup_sim.app.state import get as get_state, set as set_state
 from worldcup_sim.data.fetch import fetch_all_data
 from worldcup_sim.data.models import GroupStanding, Team
 from worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
@@ -44,7 +44,7 @@ def main():
         try:
             data = _fetch_data()
             matches = data.get("matches", [])
-            set("matches", matches)
+            set_state("matches", matches)
         except Exception as e:
             st.error(f"Failed to load match data: {e}")
             return

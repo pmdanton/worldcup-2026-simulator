@@ -6,7 +6,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from worldcup_sim.app.components.bracket_viz import render_bracket
-from worldcup_sim.app.state import get, set
+from worldcup_sim.app.state import get as get_state, set as set_state
 from worldcup_sim.data.fetch import fetch_all_data
 from worldcup_sim.data.models import GroupStanding, KnockoutMatch
 from worldcup_sim.rules.bracket import build_full_bracket, build_round_of_32, resolve_bracket_winners
@@ -32,7 +32,7 @@ def main():
         try:
             data = _fetch_data()
             matches = data.get("matches", [])
-            set("matches", matches)
+            set_state("matches", matches)
             teams_by_group = _load_teams()
         except Exception as e:
             st.error(f"Failed to load data: {e}")
@@ -132,8 +132,8 @@ def main():
                 team_group = grp
                 break
 
-        team_elo = get("team_elo") or {}
-        poly_odds = get("poly_winner_odds") or {}
+        team_elo = get_state("team_elo") or {}
+        poly_odds = get_state("poly_winner_odds") or {}
 
         cz1, cz2, cz3 = st.columns(3)
 

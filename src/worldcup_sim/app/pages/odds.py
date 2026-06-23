@@ -6,7 +6,7 @@ import streamlit as st
 import pandas as pd
 
 from worldcup_sim.app.components.charts import odds_comparison_chart
-from worldcup_sim.app.state import get, set
+from worldcup_sim.app.state import get as get_state, set as set_state
 from worldcup_sim.data.fetch import (
     fetch_all_data,
     fetch_all_match_odds,
@@ -26,23 +26,23 @@ def main():
         st.caption("Compares Polymarket odds vs two simulation variants")
 
     # Fetch Polymarket odds
-    if refresh_btn or get("poly_winner_odds") is None:
+    if refresh_btn or get_state("poly_winner_odds") is None:
         with st.spinner("Fetching Polymarket odds..."):
             try:
                 odds = fetch_polymarket_tournament_odds()
-                set("poly_winner_odds", odds)
+                set_state("poly_winner_odds", odds)
                 if odds:
                     st.success(f"Polymarket odds fetched! ({len(odds)} teams)")
                 else:
                     st.warning("Polymarket returned no odds. Using Elo fallback.")
             except Exception as e:
                 st.warning(f"Could not fetch Polymarket odds: {e}")
-                odds = get("poly_winner_odds") or {}
+                odds = get_state("poly_winner_odds") or {}
     else:
-        odds = get("poly_winner_odds") or {}
+        odds = get_state("poly_winner_odds") or {}
 
     # Run simulation (Poly+Elo)
-    sim_results = get("sim_results")
+    sim_results = get_state("sim_results")
     if refresh_btn or sim_results is None:
         with st.spinner("Running simulations (Poly+Elo)..."):
             try:
@@ -50,7 +50,7 @@ def main():
                 matches = data.get("matches", [])
                 elo = fetch_elo_ratings()
                 poly_odds = fetch_all_match_odds(matches)
-                set("poly_match_odds", poly_odds)
+                set_state("poly_match_odds", poly_odds)
                 results = run_simulation(
                     matches=matches,
                     team_elo=elo,
@@ -58,14 +58,14 @@ def main():
                     polymarket_odds_map=poly_odds,
                     seed=42,
                 )
-                set("sim_results", results)
+                set_state("sim_results", results)
                 sim_results = results
             except Exception as e:
                 st.error(f"Simulation failed: {e}")
                 sim_results = None
 
     # Run Elo-only simulation (different seed for variance)
-    elo_results = get("sim_results_elo")
+    elo_results = get_state("sim_results_elo")
     if refresh_btn or elo_results is None:
         with st.spinner("Running simulations (Elo only)..."):
             try:
@@ -79,7 +79,7 @@ def main():
                     polymarket_odds_map=None,
                     seed=99,
                 )
-                set("sim_results_elo", elo_results)
+                set_state("sim_results_elo", elo_results)
             except Exception as e:
                 st.error(f"Elo simulation failed: {e}")
                 elo_results = None

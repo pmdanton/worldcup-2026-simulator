@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide",
 )
 
-from worldcup_sim.app.state import get, init_state, set
+from worldcup_sim.app.state import get as get_state, init_state, set as set_state
 from worldcup_sim.app.pages import bracket, odds, simulation, standings
 
 
@@ -67,7 +67,7 @@ def _render_sidebar():
         st.markdown("### Data Status")
         col1, col2 = st.columns(2)
 
-        matches = get("matches")
+        matches = get_state("matches")
         if matches is not None:
             played = sum(1 for m in matches if m.played)
             col1.metric("Matches", f"{played}/{len(matches)}")
@@ -75,20 +75,20 @@ def _render_sidebar():
             with col1:
                 st.caption("Matches: not loaded")
 
-        elo = get("team_elo")
+        elo = get_state("team_elo")
         if elo is not None:
             col2.metric("Elo Ratings", f"{len(elo)} teams")
         else:
             with col2:
                 st.caption("Elo: not loaded")
 
-        sim = get("sim_results")
+        sim = get_state("sim_results")
         if sim is not None:
             st.success(f"✅ Sims: {sim.num_sims:,} runs")
         else:
             st.info("No simulations")
 
-        poly = get("poly_winner_odds")
+        poly = get_state("poly_winner_odds")
         if poly is not None:
             st.success(f"✅ Polymarket: {len(poly)} markets")
         else:
@@ -97,8 +97,8 @@ def _render_sidebar():
         st.markdown("---")
 
         # Auto-refresh toggle
-        auto = st.toggle("Auto-refresh (30s)", value=get("auto_refresh") or False, key="auto_refresh_toggle")
-        set("auto_refresh", auto)
+        auto = st.toggle("Auto-refresh (30s)", value=get_state("auto_refresh") or False, key="auto_refresh_toggle")
+        set_state("auto_refresh", auto)
 
         if auto:
             st.caption("🔄 Refreshing every 30 seconds")
@@ -112,7 +112,7 @@ def main():
     page = _render_sidebar()
 
     # Auto-refresh
-    if get("auto_refresh"):
+    if get_state("auto_refresh"):
         import time
         time.sleep(0.1)
         st.rerun()

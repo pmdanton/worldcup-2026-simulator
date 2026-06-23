@@ -13,7 +13,7 @@ from worldcup_sim.app.components.charts import (
     team_path_chart,
     win_probability_chart,
 )
-from worldcup_sim.app.state import get, set
+from worldcup_sim.app.state import get as get_state, set as set_state
 from worldcup_sim.data.fetch import (
     fetch_all_data,
     fetch_all_match_odds,
@@ -39,23 +39,23 @@ def main():
 
     run_btn = st.button("▶ Run Simulation", type="primary", use_container_width=True)
 
-    sim_results = get("sim_results")
+    sim_results = get_state("sim_results")
 
     if run_btn:
         with st.spinner(f"Running {num_sims:,} simulations..."):
             try:
                 data = fetch_all_data()
                 matches = data.get("matches", [])
-                set("matches", matches)
+                set_state("matches", matches)
                 elo = fetch_elo_ratings()
-                set("team_elo", elo)
+                set_state("team_elo", elo)
 
                 # Pre-fetch Polymarket odds for all known match-ups
                 poly_match_odds = None
                 if use_polymarket:
                     with st.status("Fetching Polymarket odds...", expanded=False):
                         poly_match_odds = fetch_all_match_odds(matches)
-                        set("poly_match_odds", poly_match_odds)
+                        set_state("poly_match_odds", poly_match_odds)
                         fetched = len(poly_match_odds)
                         st.write(f"Pre-fetched odds for {fetched} match-ups")
 
@@ -66,7 +66,7 @@ def main():
                     polymarket_odds_map=poly_match_odds if use_polymarket else None,
                     seed=seed,
                 )
-                set("sim_results", results)
+                set_state("sim_results", results)
                 sim_results = results
                 st.success(f"✅ Completed {num_sims:,} simulations!")
             except Exception as e:
@@ -233,7 +233,7 @@ def main():
         t2 = parts[1].strip()
 
         if t1 and t2:
-            elo = get("team_elo") or {}
+            elo = get_state("team_elo") or {}
             elo1 = elo.get(t1, 1500)
             elo2 = elo.get(t2, 1500)
 
