@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -14,8 +13,6 @@ from worldcup_sim.data.models import GroupStanding, Team
 from worldcup_sim.rules.group_stage import apply_group_tiebreakers, compute_group_standings
 from worldcup_sim.rules.third_place import rank_third_placed_teams
 
-_TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent.parent / "data" / "teams.json"
-
 
 @st.cache_data(ttl=300)
 def _fetch_data():
@@ -24,8 +21,8 @@ def _fetch_data():
 
 @st.cache_data(ttl=3600)
 def _load_teams() -> dict[str, list[str]]:
-    with open(_TEAMS_PATH) as f:
-        return json.load(f)["groups"]
+    from importlib.resources import files
+    return json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())["groups"]
 
 
 def _color_standings(val: pd.DataFrame) -> pd.DataFrame:

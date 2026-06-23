@@ -7,7 +7,6 @@ Implements the full bracket from Round of 32 (matches 73–88) through the Final
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 # Use src-relative import to work with project layout
@@ -17,16 +16,21 @@ from worldcup_sim.data.models import KnockoutMatch
 #  Load Annex C lookup table (495 combinations)
 # ──────────────────────────────────────────────
 
-_ANNEX_C_PATH = Path(__file__).resolve().parent.parent.parent.parent / "data" / "annex_c.json"
 
-with open(_ANNEX_C_PATH) as f:
-    _ANNEX_C_RAW: dict[str, dict] = json.load(f)
+def _load_annex_c() -> dict[tuple[str, ...], list[str]]:
+    """Lazy-load Annex C from package data."""
+    from importlib.resources import files
+    raw: dict[str, dict] = json.loads(
+        files("worldcup_sim.data").joinpath("annex_c.json").read_text()
+    )
+    result: dict[tuple[str, ...], list[str]] = {}
+    for _data in raw.values():
+        key = tuple(sorted(_data["groups"]))
+        result[key] = _data["assignments"]
+    return result
 
-# Build lookup: tuple of 8 sorted group letters → list of 8 "3X" assignments
-_ANNEX_C: dict[tuple[str, ...], list[str]] = {}
-for _combo_num, _data in _ANNEX_C_RAW.items():
-    _key = tuple(sorted(_data["groups"]))
-    _ANNEX_C[_key] = _data["assignments"]
+
+_ANNEX_C: dict[tuple[str, ...], list[str]] = _load_annex_c()
 
 
 # ──────────────────────────────────────────────

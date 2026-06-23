@@ -9,7 +9,6 @@ routing logic.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 import numpy as np
 
@@ -21,13 +20,11 @@ WIN_T1: int = 0
 DRAW: int = 1
 WIN_T2: int = 2
 
-_TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent / "data" / "teams.json"
-
 
 def get_team_order() -> list[str]:
     """Return all 48 team names in a stable order (group A–L)."""
-    with open(_TEAMS_PATH) as f:
-        data = json.load(f)
+    from importlib.resources import files
+    data = json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())
     groups = data["groups"]
     teams: list[str] = []
     for grp in sorted(groups.keys()):

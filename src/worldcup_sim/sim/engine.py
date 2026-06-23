@@ -9,7 +9,6 @@ from __future__ import annotations
 import json
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -28,13 +27,10 @@ from worldcup_sim.sim.outcome_table import (
 )
 from worldcup_sim.sim.predictor import get_match_probabilities, sample_match_outcome
 
-_TEAMS_PATH = Path(__file__).resolve().parent.parent.parent.parent / "data" / "teams.json"
-
 
 def _load_teams() -> dict[str, list[str]]:
-    with open(_TEAMS_PATH) as f:
-        data = json.load(f)
-    return data["groups"]
+    from importlib.resources import files
+    return json.loads(files("worldcup_sim.data").joinpath("teams.json").read_text())["groups"]
 
 
 def _round_name(match_id: int) -> str:
